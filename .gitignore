@@ -1,0 +1,6 @@
+.project
+.settings/
+javascript/gamejs.js
+javascript/gamejs/
+javascript/gamejs
+public/gamejs-wrapped.js
