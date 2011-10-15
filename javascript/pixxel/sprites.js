@@ -1,7 +1,6 @@
-gamejs = require('gamejs');
-pixxel = require('pixxel');
+gamejs = require('../gamejs');
 
-exports.Dude = require('sprites/dude').Dude;
+exports.Dude = require('./sprites/dude').Dude;
 
 /**
  * SpriteSheet
@@ -9,6 +8,7 @@ exports.Dude = require('sprites/dude').Dude;
  * @constructor
  */
 var SpriteSheet = exports.SpriteSheet = function(image, width, height) {
+
 	var l, k;
 	l = 0;
 	this.sequence = [];
@@ -23,10 +23,13 @@ var SpriteSheet = exports.SpriteSheet = function(image, width, height) {
 		l++;
 	}
 
-	return this;
-};
-SpriteSheet.prototype.get = function(index) {
-	return this.sequence[index[0]][index[1]];
+	/**
+	 * Get a frame.
+	 * 
+	 */
+	this.get = function(index) {
+		return this.sequence[index[0]][index[1]];
+	};
 };
 
 /**
@@ -37,19 +40,17 @@ var SpriteSheetFrame = exports.SpriteSheetFrame = function(image, rect) {
 	this.image = image;
 	this.rect = rect;
 
-	return this;
-};
-
-/**
- * Blit the sprite sheet frame onto the screen.
- * 
- * @param surface
- * @param x
- * @param y
- */
-SpriteSheetFrame.prototype.blit = function(surface, x, y) {
-	dst = new gamejs.Rect(x, y, this.rect.width, this.rect.height);
-	surface.blit(this.image, dst, this.rect);
+	/**
+	 * Blit the sprite sheet frame onto the screen.
+	 * 
+	 * @param surface
+	 * @param x
+	 * @param y
+	 */
+	this.blit = function(surface, x, y) {
+		dst = new gamejs.Rect(x, y, this.rect.width, this.rect.height);
+		surface.blit(this.image, dst, this.rect);
+	};
 };
 
 /**
@@ -71,14 +72,17 @@ var Animation = exports.Animation = function(spriteSheet, index1, index2,
 	this.duration = duration;
 	this.currentFrameIndex = 0;
 	
-	return this;
-};
+	/**
+	 * Blit an animation frame.
+	 * 
+	 */
+	this.blit = function(surface, x, y) {
+		frame = this.sequence[this.currentFrameIndex];
+		frame.blit(surface, x, y);
+		this.currentFrameIndex++;
+		if (this.currentFrameIndex >= this.sequence.length) {
+			this.currentFrameIndex = 0;
+		}
+	};
 
-Animation.prototype.blit = function(surface, x, y) {
-	frame = this.sequence[this.currentFrameIndex];
-	frame.blit(surface, x, y);
-	this.currentFrameIndex++;
-	if (this.currentFrameIndex >= this.sequence.length) {
-		this.currentFrameIndex = 0;
-	}
 };

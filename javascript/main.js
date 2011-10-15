@@ -1,30 +1,38 @@
+var pixxel = require('pixxel');
 var gamejs = require('gamejs');
-var world = require('world');
+var $v = gamejs.utils.vectors;
 
 gamejs.preload([ 'public/sprites.png' ]);
 gamejs.ready(function() {
 
 	gamejs.display.setMode([ 640, 480 ]);
 
-	var sprites = require('sprites');
-	var dude = new sprites.Dude();
-	dude.setPosition(100,100);
+
+	var dude = new pixxel.sprites.Dude();
+	dude.setPosition(100, 100);
+
+	var world = new pixxel.world.World(8, 8, 32);
+	var u = new pixxel.world.Unit();
+	world.objmanager.add(u);
+	world.objmanager.activate(u);
 	
-	var grid = new world.Grid(8, 8, 32);
+	var grid = new pixxel.world.Grid(8, 8, 32);
 
 	var mainSurface = gamejs.display.getSurface();
 
 	function tick() {
-		// game loop
+		// update
+		world.event.update(gamejs.event.get());
+		
+		// draw
+		mainSurface.clear();
 		mainSurface.fill('rgba(255,0,0,.1)');
-
+		
 		grid.draw(mainSurface);
-
+		world.draw(mainSurface);
 		dude.draw(mainSurface);
 	}
-	// gamejs.time.fpsCallback(tick, this, 8);
-	tick();
-
-	// gamejs.draw.point(mainSurface, [ 0, 0, 0, 255 ], [ 0, 0 ])
+	gamejs.time.fpsCallback(tick, this, 8);
+//	tick();
 
 });

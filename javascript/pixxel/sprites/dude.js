@@ -1,4 +1,4 @@
-gamejs = require('../gamejs');
+gamejs = require('../../gamejs');
 sprites = require('../sprites');
 
 /**
@@ -9,6 +9,7 @@ sprites = require('../sprites');
 Dude = exports.Dude = function() {
 	img = gamejs.image.load("public/sprites.png");
 	spriteSheet = new sprites.SpriteSheet(img, 32, 48);
+	
 	this.image = new sprites.Animation(spriteSheet, [ 0, 1 ], [ 1, 5 ], .25);
 
 	this.pos = [ 0, 0 ];
@@ -28,6 +29,7 @@ Dude = exports.Dude = function() {
 gamejs.utils.objects.extend(Dude, gamejs.sprite.Sprite);
 
 Dude.prototype.update = function() {
+	
 };
 
 Dude.prototype.draw = function(surface) {
