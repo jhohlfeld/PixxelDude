@@ -1,0 +1,6 @@
+This experiment is about creating an isometric game, written in javascript and targeting the html5 canvas as rendering stage.
+
+Though the story of the game remains unknown to both the public and the creator and the pace of progress is slow, plans are to create a level editor and animation tools all written in javascript.
+
+This project uses http://gamejs.org/ as underlying rendering engine.
+
